@@ -1,7 +1,7 @@
 module.exports = function toReadable (number) {
     let result = '';
-    if ( number % 100 > 0) {
-        let hundred = Math.floor(number/100) 
+    if ( number / 100 > 0) { // сотни
+        let hundred = Math.floor(number/100)
       switch (hundred) {        
           case 1:
             result = `${result}${'one hundred '}`
@@ -10,7 +10,7 @@ module.exports = function toReadable (number) {
               result = `${result}${'two hundred '}`
               break;
           case 3:
-              result = `${result}${'tree hundred '}`
+              result = `${result}${'three hundred '}`
               break;
           case 4:
               result = `${result}${'four hundred '}`
@@ -35,7 +35,7 @@ module.exports = function toReadable (number) {
         }
     }
 
-    if ( number % 10 > 1) {
+    if ( Math.floor(number / 10) > 1) { // десятки
         let tens = Math.floor(number/10) - Math.floor(number/100) * 10
       switch (tens) {        
           case 2:
@@ -66,7 +66,7 @@ module.exports = function toReadable (number) {
               break;
         }  
     }
-    if  (Math.floor(number/10) - Math.floor(number/100) * 10 !== 1) {
+    if  (Math.floor(number/10) - Math.floor(number/100) * 10 !== 1) { //единицы
         switch (number % 10) {         
             case 1:
               result = `${result}${'one'}`
@@ -75,7 +75,7 @@ module.exports = function toReadable (number) {
                 result = `${result}${'two'}`
                 break;
             case 3:
-                result = `${result}${'tree'}`
+                result = `${result}${'three'}`
                 break;
             case 4:
                 result = `${result}${'four'}`
@@ -101,7 +101,7 @@ module.exports = function toReadable (number) {
     }
 
    
-    if (number - Math.floor(number/100)*100 ) {
+    if (number - Math.floor(number/100)*100 < 20 ) { //исключения
         let num = number - Math.floor(number/100)*100
         switch (num) {         
             case 10:
@@ -133,13 +133,17 @@ module.exports = function toReadable (number) {
                 break;
             case 19:
                 result = `${result}${'nineteen'}`
-                break;
+                break;           
             default:
                 break;
       }
       }
-
-      if ( number === 0) return 'zero'
+    if (number === 0) { //ноль
+        return 'zero'
+    }
+    if (result[result.length - 1] === ' '){ // пробел в конце
+        result = result.substring(0, result.length -1)
+    }   
     return result;
-}
 
+}
